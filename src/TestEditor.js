@@ -6,6 +6,7 @@ import {
 } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import createHighlightPlugin from "./plugins/highlightPlugin";
+import addLinkPlugin from './plugins/addLinkPlugin'
 
 const highlightPlugin = createHighlightPlugin();
 
@@ -29,6 +30,7 @@ export default class TestEditor extends React.Component {
     // };
     this.plugins = [
         highlightPlugin,
+        addLinkPlugin
        ];
 
        this.textInput = React.createRef();
@@ -50,6 +52,28 @@ handleKeyCommand = command => {
         return "handled";
     }
     return "not-handled";
+};
+
+onAddLink = () => {
+    const editorState = this.state.editorState;
+    const selection = editorState.getSelection();
+    const link = window.prompt("Paste the link -");
+    if (!link) {
+        this.onChange(RichUtils.toggleLink(editorState, selection, null));
+        return "handled";
+    }
+    const content = editorState.getCurrentContent();
+    const contentWithEntity = content.createEntity("LINK", "MUTABLE", {
+        url: link
+    });
+    const newEditorState = EditorState.push(
+        editorState,
+        contentWithEntity,
+        "create-entity"
+    );
+    const entityKey = contentWithEntity.getLastCreatedEntityKey();
+    this.onChange(RichUtils.toggleLink(newEditorState, selection, entityKey));
+    return "handled";
 };
 
 onUnderlineClick = () => {
@@ -83,7 +107,7 @@ onHighlight = () => {
   
 
   render() {
-      debugger;
+    //   debugger;
     return (
       <div style={styles.editor} onClick={this.focusEditor}>
     	<button className="underline" onClick={this.onUnderlineClick}>
@@ -100,6 +124,9 @@ onHighlight = () => {
 				</button>
 				<button className="highlight" onClick={this.onHighlight}>
 					<span style={{ background: "yellow", padding: "0.3em" }}>H</span>
+				</button>
+                <button id="link_url" onClick={this.onAddLink} className="add-link">
+					<i className="material-icons">attach_file</i>
 				</button>
         <Editor
           ref={this.textInput}
