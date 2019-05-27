@@ -6,7 +6,7 @@ import TestEditor from './TestEditor'
 function App() {
   return (
     <div className="">
-      
+      <TestEditor />
     </div>
   );
 }
