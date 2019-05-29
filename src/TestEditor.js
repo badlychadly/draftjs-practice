@@ -1,8 +1,10 @@
 import React from 'react';
 import {
 	// Editor,
-	EditorState,
-	RichUtils
+    EditorState,
+    SelectionState,
+    RichUtils,
+    convertToRaw
 } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import createHighlightPlugin from "./plugins/highlightPlugin";
@@ -36,13 +38,35 @@ export default class TestEditor extends React.Component {
        this.textInput = React.createRef();
   }
 
+
+  moveSelectionToEnd = (editorState) => {
+    const content = editorState.getCurrentContent();
+    const blockMap = content.getBlockMap();
+  
+    const key = blockMap.last().getKey();
+    const length = blockMap.last().getLength();
+
+  
+    const selection = new SelectionState({
+      anchorKey: key,
+      anchorOffset: length,
+      focusKey: key,
+      focusOffset: length,
+    });
+  
+    return EditorState.acceptSelection(editorState, selection);
+  };
+
+
   onChange = editorState => {
+    //   debugger;
     this.setState({
         editorState
     });
 };
 
 handleKeyCommand = command => {
+    // debugger;
     const newState = RichUtils.handleKeyCommand(
         this.state.editorState,
         command
@@ -77,8 +101,10 @@ onAddLink = () => {
 };
 
 onUnderlineClick = () => {
+    const editorState = this.state.editorState;
+    const selection = editorState.getSelection()
     this.onChange(
-        RichUtils.toggleInlineStyle(this.state.editorState, "UNDERLINE")
+        RichUtils.toggleInlineStyle(editorState, "UNDERLINE")
     );
 };
 
@@ -98,18 +124,40 @@ onStrikeThroughClick = () => {
     );
 };
 
-onHighlight = () => {
+onHighlight = (e) => {
+    e.preventDefault()
+    const rawJson = convertToRaw(this.state.editorState.getCurrentContent())
+    const { editorState } = this.state;
+    const selectionState = editorState.getSelection()
+      const newSelection = selectionState.merge({
+        hasFocus: true
+      })
+
+      const newEditorState = EditorState.forceSelection(editorState, newSelection);
+
     this.onChange(
-        RichUtils.toggleInlineStyle(this.state.editorState, "HIGHLIGHT")
+        RichUtils.toggleInlineStyle(newEditorState, "HIGHLIGHT")
     );
+    // debugger;
 };
+
+
+// myClick = (e) => {
+//     let {editorState} = this.state
+    // debugger;
+    // this.onChange(
+    //     this.moveSelectionToEnd(this.state.editorState)
+    // )
+//     e.preventDefault()
+// }
+
 
   
 
   render() {
     //   debugger;
     return (
-      <div style={styles.editor} onClick={this.focusEditor}>
+      <div style={styles.editor} onClick={this.myClick}>
     	<button className="underline" onClick={this.onUnderlineClick}>
 					U
 				</button>
