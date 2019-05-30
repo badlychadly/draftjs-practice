@@ -126,6 +126,7 @@ onStrikeThroughClick = () => {
 
 onHighlight = (e) => {
     e.preventDefault()
+    // debugger;
     const rawJson = convertToRaw(this.state.editorState.getCurrentContent())
     const { editorState } = this.state;
     const selectionState = editorState.getSelection()
@@ -158,7 +159,7 @@ onHighlight = (e) => {
     //   debugger;
     return (
       <div style={styles.editor} onClick={this.myClick}>
-    	<button className="underline" onClick={this.onUnderlineClick}>
+    	        <button className="underline" onClick={this.onUnderlineClick}>
 					U
 				</button>
 				<button className="bold" onClick={this.onBoldClick}>
@@ -191,7 +192,8 @@ onHighlight = (e) => {
 const styles = {
   editor: {
     border: '1px solid gray',
-    minHeight: '6em'
+   "min-height": 'calc(100vh - 65px)',
+   overflow: 'hidden'
   }
 };
 
