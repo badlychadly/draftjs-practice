@@ -9,6 +9,7 @@ import {
 import Editor from "draft-js-plugins-editor";
 import createHighlightPlugin from "./plugins/highlightPlugin";
 import addLinkPlugin from './plugins/addLinkPlugin'
+import BlockStyleToolbar, { getBlockStyle } from './blockstyles/BlockStyleToolbar'
 
 const highlightPlugin = createHighlightPlugin();
 
@@ -56,6 +57,11 @@ export default class TestEditor extends React.Component {
   
     return EditorState.acceptSelection(editorState, selection);
   };
+
+
+  toggleBlockType = (blockType) => {
+    this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType));
+    };
 
 
   onChange = editorState => {
@@ -135,7 +141,7 @@ onHighlight = (e) => {
       })
 
       const newEditorState = EditorState.forceSelection(editorState, newSelection);
-
+      debugger;
     this.onChange(
         RichUtils.toggleInlineStyle(newEditorState, "HIGHLIGHT")
     );
@@ -159,6 +165,10 @@ onHighlight = (e) => {
     //   debugger;
     return (
       <div style={styles.editor} onClick={this.myClick}>
+       <BlockStyleToolbar
+    editorState={this.state.editorState}
+    onToggle={this.toggleBlockType}
+    />
     	        <button className="underline" onClick={this.onUnderlineClick}>
 					U
 				</button>
@@ -180,6 +190,7 @@ onHighlight = (e) => {
         <Editor
           ref={this.textInput}
           editorState={this.state.editorState}
+          blockStyleFn={getBlockStyle}
           handleKeyCommand={this.handleKeyCommand}
           onChange={this.onChange}
           plugins={this.plugins}
@@ -192,12 +203,7 @@ onHighlight = (e) => {
 const styles = {
   editor: {
     border: '1px solid gray',
-   "min-height": 'calc(100vh - 65px)',
+   minHeight: 'calc(100vh - 65px)',
    overflow: 'hidden'
   }
 };
-
-// ReactDOM.render(
-//   <TestEditor />,
-//   document.getElementById('container')
-// );
