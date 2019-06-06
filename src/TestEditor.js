@@ -121,49 +121,49 @@ setSelection = () => {
 
 
 
-toggleBtnInlineStyle = (e) => {
-    // const rawJson = convertToRaw(this.state.editorState.getCurrentContent())
-    // const { editorState } = this.state;
-    // const selectionState = editorState.getSelection()
-    //   const newSelection = selectionState.merge({
-    //     hasFocus: true
-    //   })
+navStyleToggle = (e) => {
+
       e.stopPropagation()
-      debugger;
       const newEditorState = this.setSelection();
+      // debugger;
 
       if (!!e.currentTarget.dataset.name) {
           return this.onChange(newEditorState)
       }
-      this.onChange(
-        RichUtils.toggleInlineStyle(newEditorState, e.currentTarget.dataset.inline)
-    );
+      else if (!!e.currentTarget.dataset.block) {
+        this.onChange(RichUtils.toggleBlockType(newEditorState, e.currentTarget.dataset.block))
+      }
+      else {
+        this.onChange(
+          RichUtils.toggleInlineStyle(newEditorState, e.currentTarget.dataset.inline)
+      );
+
+      }
 }
 
 
   
 
   render() {
-    //   debugger;
     return (
-      <div style={styles.editor} className="editor-wrapper" data-name="editor-wrapper" onClick={this.toggleBtnInlineStyle}>
+      <div style={styles.editor} className="editor-wrapper" data-name="editor-wrapper" onClick={this.navStyleToggle}>
        <BlockStyleToolbar
     editorState={this.state.editorState}
-    onToggle={this.toggleBlockType}
+    onToggle={this.navStyleToggle}
     />
-    	        <button className="underline" data-inline="UNDERLINE" onClick={this.toggleBtnInlineStyle}>
+    	        <button className="underline" data-inline="UNDERLINE" onClick={this.navStyleToggle}>
 					U
 				</button>
-				<button className="bold" data-inline="BOLD" onClick={this.toggleBtnInlineStyle}>
+				<button className="bold" data-inline="BOLD" onClick={this.navStyleToggle}>
 					<b>B</b>
 				</button>
-				<button className="italic" data-inline="ITALIC" onClick={this.toggleBtnInlineStyle}>
+				<button className="italic" data-inline="ITALIC" onClick={this.navStyleToggle}>
 					<em>I</em>
 				</button>
-				<button className="strikethrough" data-inline="STRIKETHROUGH" onClick={this.toggleBtnInlineStyle}>
+				<button className="strikethrough" data-inline="STRIKETHROUGH" onClick={this.navStyleToggle}>
 					abc
 				</button>
-				<button className="highlight" data-inline="HIGHLIGHT" onClick={this.toggleBtnInlineStyle}>
+				<button className="highlight" data-inline="HIGHLIGHT" onClick={this.navStyleToggle}>
 					<span style={{ background: "yellow", padding: "0.3em" }}>H</span>
 				</button>
                 <button id="link_url" onClick={this.onAddLink} className="add-link">

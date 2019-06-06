@@ -1,21 +1,17 @@
 import React from "react";
 
 class BlockStyleButton extends React.Component {
-	onToggle = e => {
-		e.preventDefault();
-		e.stopPropagation()
-		debugger;
-		this.props.onToggle(this.props.style);
-	};
+	
 
 	render() {
+		// debugger;
 		let className = "RichEditor-styleButton";
 		if (this.props.active) {
 			className += " RichEditor-activeButton";
 		}
 
 		return (
-			<button className={className} onClick={this.onToggle}>
+			<button data-block={this.props.style} className={className} onClick={this.props.onToggle}>
 				{this.props.label}
 			</button>
 		);
