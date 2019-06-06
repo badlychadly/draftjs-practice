@@ -36,7 +36,7 @@ export default class TestEditor extends React.Component {
         addLinkPlugin
        ];
 
-       this.textInput = React.createRef();
+    //    this.textInput = React.createRef();
   }
 
 
@@ -107,21 +107,36 @@ onAddLink = () => {
 };
 
 
+setSelection = () => {
+  const rawJson = convertToRaw(this.state.editorState.getCurrentContent())
+  const { editorState } = this.state;
+  const selectionState = editorState.getSelection()
+    const newSelection = selectionState.merge({
+      hasFocus: true
+    })
+    // debugger;
+    return EditorState.forceSelection(editorState, newSelection);
+}
+
 
 
 
 toggleBtnInlineStyle = (e) => {
-    const rawJson = convertToRaw(this.state.editorState.getCurrentContent())
-    const { editorState } = this.state;
-    const selectionState = editorState.getSelection()
-      const newSelection = selectionState.merge({
-        hasFocus: true
-      })
+    // const rawJson = convertToRaw(this.state.editorState.getCurrentContent())
+    // const { editorState } = this.state;
+    // const selectionState = editorState.getSelection()
+    //   const newSelection = selectionState.merge({
+    //     hasFocus: true
+    //   })
+      e.stopPropagation()
+      debugger;
+      const newEditorState = this.setSelection();
 
-      const newEditorState = EditorState.forceSelection(editorState, newSelection);
-
+      if (!!e.currentTarget.dataset.name) {
+          return this.onChange(newEditorState)
+      }
       this.onChange(
-        RichUtils.toggleInlineStyle(newEditorState, e.currentTarget.dataset.command)
+        RichUtils.toggleInlineStyle(newEditorState, e.currentTarget.dataset.inline)
     );
 }
 
@@ -131,36 +146,37 @@ toggleBtnInlineStyle = (e) => {
   render() {
     //   debugger;
     return (
-      <div style={styles.editor} onClick={this.myClick}>
+      <div style={styles.editor} className="editor-wrapper" data-name="editor-wrapper" onClick={this.toggleBtnInlineStyle}>
        <BlockStyleToolbar
     editorState={this.state.editorState}
     onToggle={this.toggleBlockType}
     />
-    	        <button className="underline" data-command="UNDERLINE" onClick={this.toggleBtnInlineStyle}>
+    	        <button className="underline" data-inline="UNDERLINE" onClick={this.toggleBtnInlineStyle}>
 					U
 				</button>
-				<button className="bold" data-command="BOLD" onClick={this.toggleBtnInlineStyle}>
+				<button className="bold" data-inline="BOLD" onClick={this.toggleBtnInlineStyle}>
 					<b>B</b>
 				</button>
-				<button className="italic" data-command="ITALIC" onClick={this.toggleBtnInlineStyle}>
+				<button className="italic" data-inline="ITALIC" onClick={this.toggleBtnInlineStyle}>
 					<em>I</em>
 				</button>
-				<button className="strikethrough" data-command="STRIKETHROUGH" onClick={this.toggleBtnInlineStyle}>
+				<button className="strikethrough" data-inline="STRIKETHROUGH" onClick={this.toggleBtnInlineStyle}>
 					abc
 				</button>
-				<button className="highlight" data-command="HIGHLIGHT" onClick={this.toggleBtnInlineStyle}>
+				<button className="highlight" data-inline="HIGHLIGHT" onClick={this.toggleBtnInlineStyle}>
 					<span style={{ background: "yellow", padding: "0.3em" }}>H</span>
 				</button>
                 <button id="link_url" onClick={this.onAddLink} className="add-link">
 					<i className="material-icons">attach_file</i>
 				</button>
         <Editor
-          ref={this.textInput}
+          ref="editor"
           editorState={this.state.editorState}
           blockStyleFn={getBlockStyle}
           handleKeyCommand={this.handleKeyCommand}
           onChange={this.onChange}
           plugins={this.plugins}
+          placeholder="Hello"
         />
       </div>
     );

@@ -32,6 +32,10 @@
   }
 } */
 
+.editor-wrapper {
+  padding: 1rem;
+}
+
 
 .menu-editor {
   display: inline-block;
@@ -70,4 +74,10 @@
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
   
+}
+
+.public-DraftEditorPlaceholder-root {
+  color: #9197a3;
+  position: absolute;
+  z-index: 0;
 }

@@ -3,6 +3,8 @@ import React from "react";
 class BlockStyleButton extends React.Component {
 	onToggle = e => {
 		e.preventDefault();
+		e.stopPropagation()
+		debugger;
 		this.props.onToggle(this.props.style);
 	};
 
