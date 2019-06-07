@@ -151,24 +151,31 @@ navStyleToggle = (e) => {
     editorState={this.state.editorState}
     onToggle={this.navStyleToggle}
     />
-    	        <button className="underline" data-inline="UNDERLINE" onClick={this.navStyleToggle}>
-					U
-				</button>
-				<button className="bold" data-inline="BOLD" onClick={this.navStyleToggle}>
-					<b>B</b>
-				</button>
-				<button className="italic" data-inline="ITALIC" onClick={this.navStyleToggle}>
-					<em>I</em>
-				</button>
-				<button className="strikethrough" data-inline="STRIKETHROUGH" onClick={this.navStyleToggle}>
-					abc
-				</button>
-				<button className="highlight" data-inline="HIGHLIGHT" onClick={this.navStyleToggle}>
-					<span style={{ background: "yellow", padding: "0.3em" }}>H</span>
-				</button>
-                <button id="link_url" onClick={this.onAddLink} className="add-link">
-					<i className="material-icons">attach_file</i>
-				</button>
+
+    <div className="menu-inline-wrapper">
+    <div className="menu-inline-inner">
+        <button className="underline" data-inline="UNDERLINE" onClick={this.navStyleToggle}>
+        U
+      </button>
+      <button className="bold" data-inline="BOLD" onClick={this.navStyleToggle}>
+        <b>B</b>
+      </button>
+      <button className="italic" data-inline="ITALIC" onClick={this.navStyleToggle}>
+        <em>I</em>
+      </button>
+      <button className="strikethrough" data-inline="STRIKETHROUGH" onClick={this.navStyleToggle}>
+        abc
+      </button>
+      <button className="highlight" data-inline="HIGHLIGHT" onClick={this.navStyleToggle}>
+        <span style={{ background: "yellow", padding: "0.3em" }}>H</span>
+      </button>
+              <button id="link_url" onClick={this.onAddLink} className="add-link">
+        <i className="material-icons">attach_file</i>
+      </button>
+
+    </div>
+
+    </div>
         <Editor
           ref="editor"
           editorState={this.state.editorState}
