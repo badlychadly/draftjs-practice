@@ -72,7 +72,6 @@ export default class TestEditor extends React.Component {
 };
 
 handleKeyCommand = command => {
-    // debugger;
     const newState = RichUtils.handleKeyCommand(
         this.state.editorState,
         command
@@ -111,6 +110,7 @@ setSelection = () => {
   const rawJson = convertToRaw(this.state.editorState.getCurrentContent())
   const { editorState } = this.state;
   const selectionState = editorState.getSelection()
+
     const newSelection = selectionState.merge({
       hasFocus: true
     })

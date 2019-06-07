@@ -1,4 +1,5 @@
-import { RichUtils } from "draft-js";
+import { RichUtils, getDefaultKeyBinding, KeyBindingUtil} from 'draft-js'
+const {hasCommandModifier} = KeyBindingUtil;
 
 export default () => {
 	return {
@@ -8,9 +9,10 @@ export default () => {
 			}
 		},
 		keyBindingFn: e => {
-			if (e.metaKey && e.key === "h") {
+			if (hasCommandModifier(e) && e.key === "h") {
 				return "highlight";
 			}
+			return getDefaultKeyBinding(e)
 		},
 		handleKeyCommand: (command, editorState, { setEditorState }) => {
 			if (command === "highlight") {
