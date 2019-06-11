@@ -10,6 +10,7 @@ import Editor from "draft-js-plugins-editor";
 import createHighlightPlugin from "./plugins/highlightPlugin";
 import addLinkPlugin from './plugins/addLinkPlugin'
 import BlockStyleToolbar, { getBlockStyle } from './blockstyles/BlockStyleToolbar'
+import InlineStyleToolbar from './InlineStyleToolbar'
 
 const highlightPlugin = createHighlightPlugin();
 
@@ -152,7 +153,9 @@ navStyleToggle = (e) => {
     onToggle={this.navStyleToggle}
     />
 
-    <div className="menu-inline-wrapper">
+    <InlineStyleToolbar toggle={this.navStyleToggle} onAddLink={this.onAddLink} />
+
+    {/* <div className="menu-inline-wrapper">
       <div className="menu-inline-inner">
         <div>
           <button className="menu-inline-btn underline" data-inline="UNDERLINE" onClick={this.navStyleToggle}>
@@ -177,7 +180,7 @@ navStyleToggle = (e) => {
         </div>
       </div>
 
-    </div>
+    </div> */}
         <Editor
           ref="editor"
           editorState={this.state.editorState}

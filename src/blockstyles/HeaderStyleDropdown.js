@@ -12,7 +12,7 @@ class HeaderStyleDropdown extends React.Component {
 			<select autoFocus value={this.props.active} onChange={this.onToggle}>
 				<option value="">Header Levels</option>
 				{this.props.headerOptions.map(heading => {
-					return <option value={heading.style}>{heading.label}</option>;
+					return <option key={heading.label} value={heading.style}>{heading.label}</option>;
 				})}
 			</select>
 		);
