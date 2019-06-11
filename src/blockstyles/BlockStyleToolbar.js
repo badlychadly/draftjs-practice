@@ -2,6 +2,7 @@ import React from "react";
 import { EditorState, Editor, RichUtils, AtomicBlockUtils } from "draft-js";
 import BlockStyleButton from "./BlockStyleButton";
 import HeaderStyleDropdown from "./HeaderStyleDropdown";
+import InlineStyleToolbar from '../InlineStyleToolbar'
 
 export const BLOCK_TYPES = [
 	{ label: " “ ” ", style: "blockquote" },
@@ -60,7 +61,15 @@ class BlockStyleToolbar extends React.Component {
 					);
 				})}
 
+				<InlineStyleToolbar toggle={this.props.onToggle} onAddLink={this.props.onAddLink} />
+
 				</div>
+				{/* <div >
+				{HEADER_TYPES.map(heading => {
+					// console.log(heading.value)
+					return <button key={heading.label}>{heading.label}</button>
+				})}
+			</div> */}
 			</div>
 		);
 	}

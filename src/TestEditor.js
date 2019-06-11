@@ -148,12 +148,14 @@ navStyleToggle = (e) => {
   render() {
     return (
       <div style={styles.editor} className="editor-wrapper" data-name="editor-wrapper" onClick={this.navStyleToggle}>
+      
        <BlockStyleToolbar
     editorState={this.state.editorState}
     onToggle={this.navStyleToggle}
+    onAddLink={this.onAddLink}
     />
 
-    <InlineStyleToolbar toggle={this.navStyleToggle} onAddLink={this.onAddLink} />
+    {/* <InlineStyleToolbar toggle={this.navStyleToggle} onAddLink={this.onAddLink} /> */}
 
     {/* <div className="menu-inline-wrapper">
       <div className="menu-inline-inner">

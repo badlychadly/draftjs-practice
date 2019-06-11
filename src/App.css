@@ -37,13 +37,30 @@
 }
 
 .menu-inline-wrapper {
-  display: inline-block;
-  visibility: visible;
-  /* -webkit-transition: top 75ms ease-out,left 75ms ease-out; */
-  transition: top 75ms ease-out,left 75ms ease-out;
-  /* -webkit-animation: pop-upwards 180ms forwards linear; */
-  animation: pop-upwards 180ms forwards linear;
+     display: inline-block;
+    visibility: visible;
+    -webkit-transition: top 75ms ease-out,left 75ms ease-out;
+    transition: top 75ms ease-out,left 75ms ease-out;
+    -webkit-animation: pop-upwards 180ms forwards linear;
+    animation: pop-upwards 180ms forwards linear;
 }
+
+/* .menu-inline-wrapper {
+  position: absolute;
+  visibility: hidden;
+  display: none;
+  z-index: 500;
+  -webkit-transition: none;
+  transition: none;
+  top: 0;
+  left: 0;
+  display: inline-block;
+    visibility: visible;
+    -webkit-transition: top 75ms ease-out,left 75ms ease-out;
+    transition: top 75ms ease-out,left 75ms ease-out;
+    -webkit-animation: pop-upwards 180ms forwards linear;
+    animation: pop-upwards 180ms forwards linear;
+} */
 
 
 .menu-inline-inner {
