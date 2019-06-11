@@ -39,7 +39,8 @@ class BlockStyleToolbar extends React.Component {
 			.getType();
 
 		return (
-			<span className="RichEditor-controls">
+			<div className="RichEditor-controls menu-inline-wrapper">
+				<div className="menu-inline-inner">
 				<HeaderStyleDropdown
 					headerOptions={HEADER_TYPES}
 					active={blockType}
@@ -58,7 +59,9 @@ class BlockStyleToolbar extends React.Component {
 						/>
 					);
 				})}
-			</span>
+
+				</div>
+			</div>
 		);
 	}
 }

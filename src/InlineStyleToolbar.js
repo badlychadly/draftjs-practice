@@ -6,7 +6,7 @@ export default function InlineStyleToolbar(props) {
     return (
         <div className="menu-inline-wrapper">
       <div className="menu-inline-inner">
-        <div>
+        {/* <div> */}
           <button className="menu-inline-btn underline" data-inline="UNDERLINE" onClick={props.toggle}>
           U
         </button>
@@ -20,13 +20,13 @@ export default function InlineStyleToolbar(props) {
           abc
         </button>
         <button className="menu-inline-btn highlight" data-inline="HIGHLIGHT" onClick={props.toggle}>
-          <span style={{ background: "yellow", padding: "0.3em" }}>H</span>
+          <span>Highlight</span>
         </button>
                 <button id="link_url" onClick={props.onAddLink} className="add-link">
           <i className="material-icons">attach_file</i>
         </button>
           
-        </div>
+        {/* </div> */}
       </div>
 
     </div>
