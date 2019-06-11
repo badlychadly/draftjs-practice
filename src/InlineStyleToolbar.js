@@ -4,9 +4,10 @@ import React from 'react'
 export default function InlineStyleToolbar(props) {
 
     return (
-        <div className="menu-inline-wrapper">
+        <>
+        {/* <div className="menu-inline-wrapper">
       <div className="menu-inline-inner">
-        {/* <div> */}
+        <div> */}
           <button className="menu-inline-btn underline" data-inline="UNDERLINE" onClick={props.toggle}>
           U
         </button>
@@ -26,9 +27,10 @@ export default function InlineStyleToolbar(props) {
           <i className="material-icons">attach_file</i>
         </button>
           
-        {/* </div> */}
+        {/* </div>
       </div>
 
-    </div>
+    </div> */}
+    </>
     )
 } 

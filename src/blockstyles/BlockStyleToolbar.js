@@ -64,12 +64,12 @@ class BlockStyleToolbar extends React.Component {
 				<InlineStyleToolbar toggle={this.props.onToggle} onAddLink={this.props.onAddLink} />
 
 				</div>
-				{/* <div >
+				<div className="header-dropdown">
 				{HEADER_TYPES.map(heading => {
 					// console.log(heading.value)
-					return <button key={heading.label}>{heading.label}</button>
+					return <button className="header-btn" key={heading.label}>{heading.label}</button>
 				})}
-			</div> */}
+			</div>
 			</div>
 		);
 	}

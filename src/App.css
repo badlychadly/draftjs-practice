@@ -62,6 +62,22 @@
     animation: pop-upwards 180ms forwards linear;
 } */
 
+.header-dropdown {
+  background-color: #262625;
+  width: fit-content;
+}
+
+.header-btn {
+  background: rgba(0,0,0,0);
+  color: #fff;
+  border: 0;
+  outline: none;
+}
+
+.header-btn:hover {
+  background-color: rgba(78, 78, 75, 0.99);
+}
+
 
 .menu-inline-inner {
   position: relative;
@@ -104,7 +120,7 @@
   background-color: rgba(78, 78, 75, 0.99);
 }
 
-.header-dropdown {
+/* .header-dropdown {
   position: absolute;
     will-change: transform;
     top: 0px;
@@ -126,7 +142,7 @@
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 0.25rem;
-}
+} */
 
 
 /* .menu-editor {
