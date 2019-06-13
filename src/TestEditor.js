@@ -155,34 +155,7 @@ navStyleToggle = (e) => {
     onAddLink={this.onAddLink}
     />
 
-    {/* <InlineStyleToolbar toggle={this.navStyleToggle} onAddLink={this.onAddLink} /> */}
-
-    {/* <div className="menu-inline-wrapper">
-      <div className="menu-inline-inner">
-        <div>
-          <button className="menu-inline-btn underline" data-inline="UNDERLINE" onClick={this.navStyleToggle}>
-          U
-        </button>
-        <button className="menu-inline-btn bold" data-inline="BOLD" onClick={this.navStyleToggle}>
-          <b>B</b>
-        </button>
-        <button className="menu-inline-btn italic" data-inline="ITALIC" onClick={this.navStyleToggle}>
-          <em>I</em>
-        </button>
-        <button className="menu-inline-btn strikethrough" data-inline="STRIKETHROUGH" onClick={this.navStyleToggle}>
-          abc
-        </button>
-        <button className="menu-inline-btn highlight" data-inline="HIGHLIGHT" onClick={this.navStyleToggle}>
-          <span style={{ background: "yellow", padding: "0.3em" }}>H</span>
-        </button>
-                <button id="link_url" onClick={this.onAddLink} className="add-link">
-          <i className="material-icons">attach_file</i>
-        </button>
-          
-        </div>
-      </div>
-
-    </div> */}
+    
         <Editor
           ref="editor"
           editorState={this.state.editorState}

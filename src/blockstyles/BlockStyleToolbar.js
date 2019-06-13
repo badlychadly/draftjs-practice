@@ -15,10 +15,7 @@ export const HEADER_TYPES = [
 	{ label: "(None)", style: "unstyled" },
 	{ label: "H1", style: "header-one" },
 	{ label: "H2", style: "header-two" },
-	{ label: "H3", style: "header-three" },
-	{ label: "H4", style: "header-four" },
-	{ label: "H5", style: "header-five" },
-	{ label: "H6", style: "header-six" }
+	{ label: "H3", style: "header-three" }
 ];
 
 export function getBlockStyle(block) {
@@ -31,6 +28,21 @@ export function getBlockStyle(block) {
 }
 
 class BlockStyleToolbar extends React.Component {
+
+	state = {
+		hidden: true
+	}
+
+	handleMouseEnter = e => {
+		// debugger;
+		this.setState({hidden: false})
+	}
+
+	handleMouseLeave = e => {
+		// debugger;
+		this.setState({hidden: true})
+	}
+
 	render() {
 		const { editorState } = this.props;
 		const selection = editorState.getSelection();
@@ -42,11 +54,25 @@ class BlockStyleToolbar extends React.Component {
 		return (
 			<div className="RichEditor-controls menu-inline-wrapper">
 				<div className="menu-inline-inner">
-				<HeaderStyleDropdown
+				{/* <HeaderStyleDropdown
 					headerOptions={HEADER_TYPES}
 					active={blockType}
 					onToggle={this.props.onToggle}
-				/>
+				/> */}
+
+				<div onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} style={{display: "inline-block"}}>
+				<button className="menu-inline-btn">H</button>
+				
+					<div className="header-dropdown" hidden={this.state.hidden} style={{position: "absolute", left: "2px", top: "auto"}}>
+					{HEADER_TYPES.map(heading => {
+						// console.log(heading.value)
+						return <button className="header-btn" data-block={heading.style} onClick={this.props.onToggle} key={heading.label}>{heading.label}</button>
+					})}
+				</div>
+
+				
+				</div>
+
 
 				{BLOCK_TYPES.map(type => {
 					return (
@@ -64,12 +90,15 @@ class BlockStyleToolbar extends React.Component {
 				<InlineStyleToolbar toggle={this.props.onToggle} onAddLink={this.props.onAddLink} />
 
 				</div>
-				<div className="header-dropdown">
-				{HEADER_TYPES.map(heading => {
-					// console.log(heading.value)
-					return <button className="header-btn" key={heading.label}>{heading.label}</button>
-				})}
-			</div>
+				{/* { this.state.show &&
+					<div className="header-dropdown" onMouseLeave={this.handleMouseOut}>
+					{HEADER_TYPES.map(heading => {
+						// console.log(heading.value)
+						return <button className="header-btn" data-block={heading.style} onClick={this.props.onToggle} key={heading.label}>{heading.label}</button>
+					})}
+				</div>
+
+				} */}
 			</div>
 		);
 	}
