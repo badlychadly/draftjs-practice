@@ -23,27 +23,9 @@ const myMap = {
   "blocks": [
       {
           "key": "5h45l",
-          "text": "the quick brown fox jumps over the lazy dog ",
-          "type": "unstyled",
+          "text": "",
+          "type": "header-one",
           "depth": 0,
-          "inlineStyleRanges": [
-              {
-                  "offset": 4,
-                  "length": 5,
-                  "style": "ITALIC"
-              },
-          
-              {
-                  "offset": 10,
-                  "length": 5,
-                  "style": "UNDERLINE"
-              },
-             {
-                  "offset": 16,
-                  "length": 3,
-                  "style": "BOLD"
-              }
-          ],
           "entityRanges": [],
           "data": {}
       }
@@ -59,8 +41,8 @@ export default class TestEditor extends React.Component {
     const cState = convertFromRaw(myMap)
     const blocks = convertFromHTML(title)
     // debugger;
-    // this.state = {editorState: EditorState.createEmpty()}
-    this.state = {editorState: EditorState.createWithContent(cState)};
+    this.state = {editorState: EditorState.createEmpty()}
+    // this.state = {editorState: EditorState.createWithContent(cState)};
     this.onChange = (editorState) => {
         this.setState({editorState});
     }
@@ -160,7 +142,16 @@ setSelection = () => {
 }
 
 componentDidMount() {
-  // debugger;
+  const contentState = this.state.editorState.getCurrentContent();
+  const selectionState = this.state.editorState.getSelection();
+  const cState = convertFromRaw(myMap)
+  this.setState({
+    editorState: EditorState.push(
+      this.state.editorState,
+      cState
+    )
+  })
+  debugger;
   const firstBlock = this.state.editorState.getCurrentContent().getFirstBlock()
   if (firstBlock.getLength()) {
     
