@@ -3,8 +3,12 @@ import {
 	// Editor,
     EditorState,
     SelectionState,
+    ContentState,
     RichUtils,
-    convertToRaw
+    convertToRaw,
+    convertFromRaw,
+    convertFromHTML,
+    Modifier
 } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import createHighlightPlugin from "./plugins/highlightPlugin";
@@ -14,14 +18,50 @@ import InlineStyleToolbar from './InlineStyleToolbar'
 
 const highlightPlugin = createHighlightPlugin();
 
+const myMap = {
+  "entityMap": {},
+  "blocks": [
+      {
+          "key": "5h45l",
+          "text": "the quick brown fox jumps over the lazy dog ",
+          "type": "unstyled",
+          "depth": 0,
+          "inlineStyleRanges": [
+              {
+                  "offset": 4,
+                  "length": 5,
+                  "style": "ITALIC"
+              },
+          
+              {
+                  "offset": 10,
+                  "length": 5,
+                  "style": "UNDERLINE"
+              },
+             {
+                  "offset": 16,
+                  "length": 3,
+                  "style": "BOLD"
+              }
+          ],
+          "entityRanges": [],
+          "data": {}
+      }
+  ]
+}
+
 
 
 export default class TestEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {editorState: EditorState.createEmpty()};
+    const title = `<h1 class="public-DraftEditorPlaceholder-root">Hello</h1>`
+    const cState = convertFromRaw(myMap)
+    const blocks = convertFromHTML(title)
+    // debugger;
+    // this.state = {editorState: EditorState.createEmpty()}
+    this.state = {editorState: EditorState.createWithContent(cState)};
     this.onChange = (editorState) => {
-        // debugger
         this.setState({editorState});
     }
     // this.setEditor = (editor) => {
@@ -119,6 +159,14 @@ setSelection = () => {
     return EditorState.forceSelection(editorState, newSelection);
 }
 
+componentDidMount() {
+  // debugger;
+  const firstBlock = this.state.editorState.getCurrentContent().getFirstBlock()
+  if (firstBlock.getLength()) {
+    
+  }
+}
+
 
 
 
@@ -126,6 +174,7 @@ navStyleToggle = (e) => {
 
       e.stopPropagation()
       const newEditorState = this.setSelection();
+      const m = Modifier
       // debugger;
 
       if (!!e.currentTarget.dataset.name) {

@@ -19,6 +19,7 @@ export const HEADER_TYPES = [
 ];
 
 export function getBlockStyle(block) {
+	// debugger;
 	switch (block.getType()) {
 		case "blockquote":
 			return "RichEditor-blockquote";

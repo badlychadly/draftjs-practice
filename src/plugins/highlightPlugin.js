@@ -9,7 +9,6 @@ export default () => {
 			}
 		},
 		keyBindingFn: e => {
-			// console.trace(KeyBindingUtil)
 			if (hasCommandModifier(e) && e.key === "h") {
 				return "highlight";
 			}
