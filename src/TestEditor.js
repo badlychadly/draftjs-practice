@@ -8,7 +8,8 @@ import {
     convertToRaw,
     convertFromRaw,
     convertFromHTML,
-    Modifier
+    Modifier,
+    getDefaultKeyBinding
 } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import createHighlightPlugin from "./plugins/highlightPlugin";
@@ -99,6 +100,15 @@ handleKeyCommand = command => {
         this.state.editorState,
         command
     );
+    // debugger;
+    if (command === "split-block") {
+      
+      const checkMod = Modifier.splitBlock(this.state.editorState.getCurrentContent(), this.state.editorState.getSelection())
+      const newEState = EditorState.push(this.state.editorState, checkMod, 'change-block-type')
+      // debugger;
+      this.onChange(RichUtils.toggleBlockType(newEState, 'unstyled'))
+      return "handled"
+    }
     if (newState) {
         this.onChange(newState);
         return "handled";
@@ -151,7 +161,6 @@ componentDidMount() {
       cState
     )
   })
-  debugger;
   const firstBlock = this.state.editorState.getCurrentContent().getFirstBlock()
   if (firstBlock.getLength()) {
     
@@ -182,6 +191,13 @@ navStyleToggle = (e) => {
       }
 }
 
+  // keyBindingFn = (e) => {
+  //   if (e.keycode === 13) {
+  //     return 'unstyled'
+  //   }
+  //   return getDefaultKeyBinding(e)
+  // }
+
 
   
 
@@ -199,6 +215,7 @@ navStyleToggle = (e) => {
         <Editor
           ref="editor"
           editorState={this.state.editorState}
+          // keyBindingFn={this.keyBindingFn}
           blockStyleFn={getBlockStyle}
           handleKeyCommand={this.handleKeyCommand}
           onChange={this.onChange}
