@@ -13,7 +13,7 @@ import {
 } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import createHighlightPlugin from "./plugins/highlightPlugin";
-import addLinkPlugin from './plugins/addLinkPlugin'
+import addLinkPluginPlugin from './plugins/addLinkPlugin'
 import BlockStyleToolbar, { getBlockStyle } from './blockstyles/BlockStyleToolbar'
 import InlineStyleToolbar from './InlineStyleToolbar'
 
@@ -28,6 +28,7 @@ const myMap = {
           "type": "header-one",
           "depth": 0,
           "entityRanges": [],
+          "inlineStyleRanges": [],
           "data": {}
       }
   ]
@@ -42,8 +43,8 @@ export default class TestEditor extends React.Component {
     const cState = convertFromRaw(myMap)
     const blocks = convertFromHTML(title)
     // debugger;
-    this.state = {editorState: EditorState.createEmpty()}
-    // this.state = {editorState: EditorState.createWithContent(cState)};
+    // this.state = {editorState: EditorState.createEmpty()}
+    this.state = {editorState: EditorState.createWithContent(cState)};
     this.onChange = (editorState) => {
         this.setState({editorState});
     }
@@ -55,9 +56,10 @@ export default class TestEditor extends React.Component {
     //     this.editor.focus();
     //   }
     // };
+    // debugger;
     this.plugins = [
         highlightPlugin,
-        addLinkPlugin
+        addLinkPluginPlugin
        ];
 
     //    this.textInput = React.createRef();
@@ -96,16 +98,15 @@ export default class TestEditor extends React.Component {
 };
 
 handleKeyCommand = command => {
+  const testUtils = RichUtils
     const newState = RichUtils.handleKeyCommand(
         this.state.editorState,
         command
     );
     // debugger;
     if (command === "split-block") {
-      
       const checkMod = Modifier.splitBlock(this.state.editorState.getCurrentContent(), this.state.editorState.getSelection())
-      const newEState = EditorState.push(this.state.editorState, checkMod, 'change-block-type')
-      // debugger;
+      const newEState = EditorState.push(this.state.editorState, checkMod, command)
       this.onChange(RichUtils.toggleBlockType(newEState, 'unstyled'))
       return "handled"
     }
@@ -116,32 +117,34 @@ handleKeyCommand = command => {
     return "not-handled";
 };
 
-onAddLink = () => {
-    const editorState = this.state.editorState;
-    const selection = editorState.getSelection();
-    const link = window.prompt("Paste the link -");
-    if (!link) {
-        this.onChange(RichUtils.toggleLink(editorState, selection, null));
-        return "handled";
-    }
-    const content = editorState.getCurrentContent();
-    const contentWithEntity = content.createEntity("LINK", "MUTABLE", {
-        url: link
-    });
-    const newEditorState = EditorState.push(
-        editorState,
-        contentWithEntity,
-        "create-entity"
-    );
-    const entityKey = contentWithEntity.getLastCreatedEntityKey();
-    this.onChange(RichUtils.toggleLink(newEditorState, selection, entityKey));
+onAddLink = (e) => {
+  e.stopPropagation()
+  const editorState = this.state.editorState;
+  const selection = editorState.getSelection();
+  // debugger;
+  const link = window.prompt("Paste the link -");
+  if (!link) {
+    this.onChange(RichUtils.toggleLink(editorState, selection, null));
     return "handled";
+  }
+  const content = editorState.getCurrentContent();
+  const contentWithEntity = content.createEntity("LINK", "MUTABLE", {
+    url: link
+  });
+  const newEditorState = EditorState.push(
+    editorState,
+    contentWithEntity,
+    "create-entity"
+  );
+  const entityKey = contentWithEntity.getLastCreatedEntityKey();
+  this.onChange(RichUtils.toggleLink(newEditorState, selection, entityKey));
+  return "handled";
 };
 
 
-setSelection = () => {
+setSelection = (editorState) => {
   const rawJson = convertToRaw(this.state.editorState.getCurrentContent())
-  const { editorState } = this.state;
+  // const { editorState } = this.state;
   const selectionState = editorState.getSelection()
 
     const newSelection = selectionState.merge({
@@ -151,29 +154,33 @@ setSelection = () => {
     return EditorState.forceSelection(editorState, newSelection);
 }
 
-componentDidMount() {
-  const contentState = this.state.editorState.getCurrentContent();
-  const selectionState = this.state.editorState.getSelection();
-  const cState = convertFromRaw(myMap)
-  this.setState({
-    editorState: EditorState.push(
-      this.state.editorState,
-      cState
-    )
-  })
-  const firstBlock = this.state.editorState.getCurrentContent().getFirstBlock()
-  if (firstBlock.getLength()) {
+// componentDidMount() {
+//   const contentState = this.state.editorState.getCurrentContent();
+//   const selectionState = this.state.editorState.getSelection();
+  // const cState = convertFromRaw(myMap)
+  // const rawInfo = convertToRaw(this.state.editorState.getCurrentContent())
+  //  const testMod = Modifier.setBlockType(contentState, selectionState, "header-one")
+  // // debugger;
+  //  const testState = EditorState.push(this.state.editorState, testMod, "change-block-type")
+  // this.onChange(testState)
+  // this.setState({
+  //   editorState: EditorState.push(
+  //     this.state.editorState,
+  //     cState
+  //   )
+  // })
+//   const firstBlock = this.state.editorState.getCurrentContent().getFirstBlock()
+//   if (firstBlock.getLength()) {
     
-  }
-}
+//   }
+// }
 
 
 
 
 navStyleToggle = (e) => {
-
       e.stopPropagation()
-      const newEditorState = this.setSelection();
+      const newEditorState = this.setSelection(this.state.editorState);
       const m = Modifier
       // debugger;
 
