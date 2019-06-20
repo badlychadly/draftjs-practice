@@ -137,7 +137,8 @@ onAddLink = (e) => {
     "create-entity"
   );
   const entityKey = contentWithEntity.getLastCreatedEntityKey();
-  this.onChange(RichUtils.toggleLink(newEditorState, selection, entityKey));
+  // const rawhtml = convert
+  this.onChange(this.setSelection(RichUtils.toggleLink(newEditorState, selection, entityKey)));
   return "handled";
 };
 
@@ -157,22 +158,17 @@ setSelection = (editorState) => {
 // componentDidMount() {
 //   const contentState = this.state.editorState.getCurrentContent();
 //   const selectionState = this.state.editorState.getSelection();
-  // const cState = convertFromRaw(myMap)
-  // const rawInfo = convertToRaw(this.state.editorState.getCurrentContent())
-  //  const testMod = Modifier.setBlockType(contentState, selectionState, "header-one")
-  // // debugger;
-  //  const testState = EditorState.push(this.state.editorState, testMod, "change-block-type")
+//   const cState = convertFromRaw(myMap)
+//   const rawInfo = convertToRaw(this.state.editorState.getCurrentContent())
+//    const testMod = Modifier.setBlockType(contentState, selectionState, "header-one")
+//   // debugger;
+//    const testState = EditorState.push(this.state.editorState, testMod, "change-block-type")
+//    const rawCon = convertToRaw(testState.getCurrentContent())
+//    const editor = Editor
+//    const rich = RichUtils
+  //  debugger;
   // this.onChange(testState)
-  // this.setState({
-  //   editorState: EditorState.push(
-  //     this.state.editorState,
-  //     cState
-  //   )
-  // })
-//   const firstBlock = this.state.editorState.getCurrentContent().getFirstBlock()
-//   if (firstBlock.getLength()) {
-    
-//   }
+  
 // }
 
 
