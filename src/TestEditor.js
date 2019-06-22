@@ -9,7 +9,8 @@ import {
     convertFromRaw,
     convertFromHTML,
     Modifier,
-    getDefaultKeyBinding
+    getDefaultKeyBinding,
+    DefaultDraftBlockRenderMap
 } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import createHighlightPlugin from "./plugins/highlightPlugin";
@@ -33,6 +34,8 @@ const myMap = {
       }
   ]
 }
+
+
 
 
 
@@ -155,7 +158,7 @@ setSelection = (editorState) => {
     return EditorState.forceSelection(editorState, newSelection);
 }
 
-// componentDidMount() {
+componentDidMount() {
 //   const contentState = this.state.editorState.getCurrentContent();
 //   const selectionState = this.state.editorState.getSelection();
 //   const cState = convertFromRaw(myMap)
@@ -166,10 +169,11 @@ setSelection = (editorState) => {
 //    const rawCon = convertToRaw(testState.getCurrentContent())
 //    const editor = Editor
 //    const rich = RichUtils
+      const dMap = DefaultDraftBlockRenderMap
   //  debugger;
   // this.onChange(testState)
   
-// }
+}
 
 
 
